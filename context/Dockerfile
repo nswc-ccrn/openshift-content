@@ -42,5 +42,5 @@ RUN curl -fsSL -o /usr/local/bin/trident-installer.tar.gz https://github.com/Net
 RUN mkdir -p /workspace && chown -R 0:0 /workspace
 
 WORKDIR /workspace
-ENTRYPOINT ['/bin/sh', '-c']
+ENTRYPOINT ["/bin/sh", "-c"]
 
