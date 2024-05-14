@@ -1,4 +1,4 @@
-# openshift-content
+# Openshift Content (NSWC CCRN)
 Project for managing connected to disconnected openshift content
 
 ## Description
@@ -11,14 +11,14 @@ You can modify `ImageSetConfiguration` manifests in the `configs/` directory of 
 
 Examples on how to fill out these configs can be found at [Red Hat Openshift Product Documentation Site](https://docs.openshift.com/container-platform/4.15/installing/disconnected_install/installing-mirroring-disconnected.html#oc-mirror-image-set-examples_installing-mirroring-disconnected)
 
-### Downloading Content
 ```bash
 oc mirror --config=<config file>.yaml file://.
 ```
 
 Keep note that the oc-mirror tool generates metadata with transactions in the `publish` directory, which by default will go to where the `ImageSetConfiguration` manifest was configured to. The `oc mirror` command will simply write the content to the `file://` path you choose. Keep this in mind, as subsequent runs of `oc mirror` rely on the history from `publish` in order to generate accurate sequential tarballs, without including ALL of the data each time.
 
-### Uploading Content
+
+## Uploading Content
 
 ```bash
 oc mirror --from=<directory> docker://<fqdn of registry>:<PORT>
@@ -29,13 +29,13 @@ If you use a directory path such as a folder that contains multiple tarballs, it
 For advanced usage, check `oc mirror --help`.
 
 
-### Toolbox Container
+## Toolbox Container
 
 In many cases, you might need to be able to do this work from a system with updated packages, such as glibc 3.24+ in order for newer version of oc-mirror to work. 
 
 For this reason, in this project repo there is also a `context/` folder with a Dockerfile that has all of the tooling binaries pre-installed, based on RHEL 9 UBI. This is a good way to get things working even on an older system such as a RHEL 7 host.
 
-#### Build the Toolbox Container
+### Build the Toolbox Container
 
 ```bash
 podman build -f context/Dockerfile -t quay.io/nswc-ccrn/toolbox:latest
@@ -43,7 +43,7 @@ podman build -f context/Dockerfile -t quay.io/nswc-ccrn/toolbox:latest
 
 The above command will build a fresh container with tools.
 
-#### Save/Export the Container Archive (Tarball)
+### Save/Export the Container Archive (Tarball)
 
 ```bash
 podman save quay.io/nswc-ccrn/toolbox:latest nswc-ccrn-toolbox.tar.gz --format oci-archive
@@ -51,13 +51,13 @@ podman save quay.io/nswc-ccrn/toolbox:latest nswc-ccrn-toolbox.tar.gz --format o
 
 Export and save the container as a local tar file with the oci-archive format in order to preserve manifest metadata and compress the image.
 
-#### Load the Container Archive
+### Load the Container Archive
 
 ```bash
 podman load -i nswc-ccrn-toolbox.tar.gz
 ```
 
-#### Shell into the container
+### Shell into the container
 
 ```bash
 podman run --it --rm --entrypoint /bin/bash \
