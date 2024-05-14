@@ -1,0 +1,63 @@
+#!/bin/bash
+
+# ------------------------------------------------------------------
+# [Chris Kuperstein] Operator Catalog Generation
+#          Wrappers oc-mirror to generate a full list of operators from the Red Hat distributed operator catalogs.
+#          Written because oc-mirror is very slow when gathering the index data due to architectural limitations of the catalog service
+#          This takes about 40 minutes+ to execute and spits out a directory of text files which can be used to look at what's published
+# ------------------------------------------------------------------
+
+VERSION=0.1.0
+USAGE="Usage: generate-catalog-lists -hv <version>"
+
+# --- Options processing -------------------------------------------
+if [ $# == 0 ]; then
+	echo $USAGE
+	exit 1
+fi
+
+while getopts ":i:vh" optname; do
+	case "$optname" in
+	"v")
+		echo "Version $VERSION"
+		exit 0
+		;;
+	"h")
+		echo $USAGE
+		exit 0
+		;;
+	"?")
+		echo "Unknown option $OPTARG"
+		exit 0
+		;;
+	":")
+		echo "No argument value for option $OPTARG"
+		exit 0
+		;;
+	*)
+		echo "Unknown error while processing options"
+		exit 0
+		;;
+	esac
+done
+
+shift $(($OPTIND - 1))
+
+param1=$1
+
+# --- Locks -------------------------------------------------------
+LOCK_FILE=/tmp/$SUBJECT.lock
+if [ -f "$LOCK_FILE" ]; then
+	echo "Script is already running"
+	exit
+fi
+
+trap "rm -f $LOCK_FILE" EXIT
+touch $LOCK_FILE
+# --- Body --------------------------------------------------------
+mkdir -p ./$1 || [ -d ./$1 ]
+oc mirror list operators --catalog=registry.redhat.io/redhat/redhat-operator-index:v$1 >$1/redhat-operator-index
+oc mirror list operators --catalog=registry.redhat.io/redhat/certified-operator-index:v$1 >$1/certified-operator-index
+oc mirror list operators --catalog=registry.redhat.io/redhat/redhat-marketplace-index:v$1 >$1/redhat-marketplace-index
+oc mirror list operators --catalog=registry.redhat.io/redhat/community-operator-index:v$1 >$1/community-operator-index
+# -----------------------------------------------------------------
