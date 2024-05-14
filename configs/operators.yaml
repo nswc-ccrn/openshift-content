@@ -1,0 +1,12 @@
+kind: ImageSetConfiguration
+apiVersion: mirror.openshift.io/v1alpha2
+storageConfig:
+  local:
+    path: ./
+mirror:
+  operators:
+  - catalog: registry.redhat.io/redhat/redhat-operator-index:v4.16
+    packages:
+    - name: ansible-automation-platform-operator
+    - name: cincinnati-operator
+    - name: openshift-gitops-operator
