@@ -13,6 +13,7 @@ mirror:
   - catalog: quay.io/operatorhubio/catalog:latest
     packages:
     - name: trident-operator
+    - name: atlasmap-operator
   additionalImages:
   # List retrieved from tridentctl, installed from https://github.com/NetApp/trident
     # Used for NetApp storage CSI driver
