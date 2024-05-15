@@ -10,3 +10,16 @@ mirror:
     - name: ansible-automation-platform-operator
     - name: cincinnati-operator
     - name: openshift-gitops-operator
+  - catalog: quay.io/operatorhubio/catalog:latest
+    packages:
+    - name: trident-operator
+  additionalImages:
+  # List retrieved from tridentctl, installed from https://github.com/NetApp/trident
+    # Used for NetApp storage CSI driver
+  - name: docker.io/netapp/trident:24.02.0
+  - name: docker.io/netapp/trident-autosupport:24.02
+  - name: registry.k8s.io/sig-storage/csi-provisioner:v4.0.0
+  - name: registry.k8s.io/sig-storage/csi-attacher:v4.5.0
+  - name: registry.k8s.io/sig-storage/csi-resizer:v1.9.3
+  - name: registry.k8s.io/sig-storage/csi-snapshotter:v6.3.3
+  - name: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.10.0
