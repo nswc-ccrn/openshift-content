@@ -1,4 +1,4 @@
-# Openshift Content (NSWC CCRN)
+# Openshift Content
 Project for managing connected to disconnected openshift content
 
 ## Description
