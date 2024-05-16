@@ -2,5 +2,3 @@ pull-secret.txt
 *auth.json
 *.tar
 *.log
-oc-mirror-workspace/
-publish/
