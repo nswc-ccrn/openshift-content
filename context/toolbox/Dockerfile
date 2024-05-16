@@ -1,7 +1,7 @@
 FROM registry.access.redhat.com/ubi9/ubi:latest
 
 # Install dependencies
-RUN dnf install -y git vim podman && dnf clean all
+RUN dnf install -y jq git vim podman && dnf clean all
 
 # Install Helm 3
 RUN curl -fsSL -o /usr/local/bin/get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 \
