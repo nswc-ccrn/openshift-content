@@ -2,3 +2,4 @@ pull-secret.txt
 *auth.json
 *.tar
 *.log
+*.tar.gz

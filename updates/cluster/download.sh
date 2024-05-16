@@ -1,4 +1,6 @@
 #!/bin/bash
+scriptDir=$(dirname -- "$(readlink -f -- "$BASH_SOURCE")")
+podman image exists quay.io/nswc-ccrn/oc-mirror:latest || podman pull quay.io/nswc-ccrn/oc-mirror:latest
 
 podman run -d --rm --name oc-mirror-update-cluster \
 	-v ./pull-secret.txt:/root/.docker/config.json:z \

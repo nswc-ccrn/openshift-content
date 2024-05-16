@@ -7,16 +7,20 @@ In this repository there are folders that contain imageSetConfigs for oc-mirror,
 
 ## Downloading content
 
-You can modify `ImageSetConfiguration` manifests in the `configs/` directory of this project. These files are used in `oc-mirror` to provide a list of content you wish to download and package into sequential tarballs which can then be transported into a disconnected network.
-
+Modify the `ImageSetConfiguration` you desire under the `updates/` folder.
 Examples on how to fill out these configs can be found at [Red Hat Openshift Product Documentation Site](https://docs.openshift.com/container-platform/4.15/installing/disconnected_install/installing-mirroring-disconnected.html#oc-mirror-image-set-examples_installing-mirroring-disconnected)
 
-```bash
-oc mirror --config=<config file>.yaml file://.
-```
+Download the content by running the oc-mirror container image and mount the following:
 
-Keep note that the oc-mirror tool generates metadata with transactions in the `publish` directory, which by default will go to where the `ImageSetConfiguration` manifest was configured to. The `oc mirror` command will simply write the content to the `file://` path you choose. Keep this in mind, as subsequent runs of `oc mirror` rely on the history from `publish` in order to generate accurate sequential tarballs, without including ALL of the data each time.
+- `pull-secret.txt` into `/root/.docker/config.json` so that `oc-mirror` has credentials to authorize the pull from the repositories you're pulling content from.
+- an `ImageSetConfiguration`.yaml file mounted into `/config.yaml` so that `oc-mirror` knows what you're wanting to pull down.
+- `updates/<directory>/oc-mirror-workspace` or equivalent into `/oc-mirror-workspace` which is where `oc-mirror` dumps it's data, including the tarballs that you'll need to move into your network.
+- `updates/<directory>/publish` or equivalent into `/publish` so `oc-mirror` has a place to put its metadata regarding download and upload. Preserving this between runs will speed things up.
 
+*Alternatively*:
+- put your `pull-secret.txt` in the root of the project directory, and run the `download.sh` scripts in `updates/<dir>/`. The scripts should be located beside the `ImageSetConfiguration` yaml files.
+
+The download script will run a container in the background that is downloading your content. you can use `podman ps -a` and `podman logs -f <container name>` to check the progress and status of those containers.
 
 ## Uploading Content
 
