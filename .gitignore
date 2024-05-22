@@ -1,6 +1,5 @@
 pull-secret.txt
 pull-secret.json
-updates/**/content/
 *auth.json
 *.tar
 *.log

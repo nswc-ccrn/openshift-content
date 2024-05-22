@@ -4,7 +4,7 @@ podman image exists quay.io/nswc-ccrn/oc-mirror:latest || podman pull quay.io/ns
 
 podman run -d --rm --name oc-mirror-update-cluster \
 	-v $scriptDir/../../pull-secret.txt:/root/.docker/config.json:z \
-	-v $scriptDir/config.yaml:/content/config.yaml:z \
+	-v $scriptDir/config.yaml:/config.yaml:z \
 	-v $scriptDir/content:/content:z \
 	quay.io/nswc-ccrn/oc-mirror:latest \
-	--config=/content/config.yaml file://content
+	--config=/config.yaml file://content
