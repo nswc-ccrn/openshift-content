@@ -1,6 +1,6 @@
 pull-secret.txt
 pull-secret.json
-updates/**/*.metadata.json
+updates/**/content/
 *auth.json
 *.tar
 *.log
