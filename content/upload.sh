@@ -1,7 +1,7 @@
 #!/bin/bash
 
-scriptDir=$(dirname -- "$(readlink -f -- "$BASH_SOURCE")")
-podman image exists quay.io/nswc-ccrn/oc-mirror:latest || podman load -i $scriptDir/../../images/oc-mirror.tar.gz
+scriptDir=$(realpath $0)
+podman image exists quay.io/nswc-ccrn/oc-mirror:latest || podman load -i $scriptDir/../images/oc-mirror.tar.gz
 
 podman run -it --rm --name oc-mirror-upload-cluster-updates \
 	--workdir /content \
