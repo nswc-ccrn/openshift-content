@@ -1,0 +1,38 @@
+kind: ImageSetConfiguration
+apiVersion: mirror.openshift.io/v1alpha2
+storageConfig:
+  local:
+    path: ./
+mirror:
+  platform:
+    channels:
+    - name: stable-4.15
+      type: ocp
+      shortestPath: true
+    - name: stable-4.14
+      type: ocp
+      shortestPath: true
+    - name: stable-4.13
+      type: ocp
+      minVersion: 4.12.24
+      shortestPath: true
+    graph: true
+  operators:
+  - catalog: registry.redhat.io/redhat/redhat-operator-index:v4.16
+    packages:
+    - name: ansible-automation-platform-operator
+    - name: cincinnati-operator
+    - name: openshift-gitops-operator
+  - catalog: quay.io/operatorhubio/catalog:latest
+    packages:
+    - name: trident-operator
+  additionalImages:
+  # List retrieved from tridentctl, installed from https://github.com/NetApp/trident
+    # Used for NetApp storage CSI driver
+  - name: docker.io/netapp/trident:24.02.0
+  - name: docker.io/netapp/trident-autosupport:24.02
+  - name: registry.k8s.io/sig-storage/csi-provisioner:v4.0.0
+  - name: registry.k8s.io/sig-storage/csi-attacher:v4.5.0
+  - name: registry.k8s.io/sig-storage/csi-resizer:v1.9.3
+  - name: registry.k8s.io/sig-storage/csi-snapshotter:v6.3.3
+  - name: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.10.0
