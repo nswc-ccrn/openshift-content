@@ -23,6 +23,7 @@ mirror:
     - name: ansible-automation-platform-operator
     - name: cincinnati-operator
     - name: openshift-gitops-operator
+    - name: advanced-cluster-management
   additionalImages:
   # List retrieved from tridentctl, installed from https://github.com/NetApp/trident
     # Used for NetApp storage CSI driver
