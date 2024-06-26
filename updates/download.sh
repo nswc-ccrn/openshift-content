@@ -11,4 +11,4 @@ podman run -d --name oc-mirror-update-cluster \
 	-v $scriptDir/config.yaml:/config.yaml:z \
 	-v $scriptDir/content:/content:z \
 	quay.io/nswc-ccrn/oc-mirror:latest \
-	--config=/config.yaml file://.
+	--config=/config.yaml file://. --rebuild-catalogs
