@@ -8,4 +8,4 @@ podman run -it --rm --name oc-mirror-upload-cluster-updates \
 	-v /run/user/1000/containers/auth.json:/root/.docker/config.json:z \
 	-v $scriptDir/content:/content:z \
 	quay.io/nswc-ccrn/oc-mirror:latest \
-	--dest-skip-tls --from=. docker://$1
+	--dest-skip-tls --from=. docker://$1 --rebuild-catalogs
