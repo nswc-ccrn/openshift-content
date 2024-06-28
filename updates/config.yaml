@@ -17,6 +17,8 @@ mirror:
     - name: cincinnati-operator
     - name: openshift-gitops-operator
     - name: advanced-cluster-management
+    - name: quay-operator
+    - name: container-security-operator
   - catalog: registry.redhat.io/redhat/certified-operator-index:v4.16
     packages:
     - name: elasticsearch-eck-operator-certified
